@@ -16,7 +16,7 @@
             }
             else
             {
-                Console.WriteLine("Washing of bird went wrong");
+                Console.WriteLine("Washing of bird went wrong ");
             }
         }
 
