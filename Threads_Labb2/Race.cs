@@ -10,6 +10,11 @@
             new Car("Bulan")
         };
 
+        public static void StartRace()
+        {
+            List<Car> Cars;
 
+            
+        }
     }
 }

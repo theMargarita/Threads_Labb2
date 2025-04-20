@@ -3,14 +3,14 @@
     class Refuel
     {
         //out of gas - 1/50 probability - stops for 15 seconds (15000)
-        public static async Task OutOfGas(string name)
+        public static async Task OutOfGas(string name, Car Car)
         {
             Random rand = new Random();
             var randomGas = rand.Next(1, 51);
 
             if (randomGas == 1)
             {
-                Console.WriteLine($"{name} have run out of gas - refuel");
+                Console.WriteLine($"{Car.Name} have run out of gas - refuel");
                 await Task.Delay(15000); //15 seconds
                 
             }

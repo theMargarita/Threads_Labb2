@@ -3,7 +3,7 @@
     class EngineProblem
     {
         //Error on the engine - 10/50 (1/5) probability - decrement with one km/h
-        public static void EngineError(string name, Car Car)
+        public static async Task EngineError(string name, Car Car)
         {
 
             Random rand = new Random();
@@ -11,11 +11,17 @@
 
             if (randomEngineError == 1)
             {
-                Console.WriteLine($"{name} got some engine problem - ");
+                Console.WriteLine($"{Car.Name} got some engine problem");
                 Car.Speed = -1;
-                if(Car.Speed < 1)
+                if (Car.Speed < 1)
                 {
-                    Console.WriteLine($"{name} new speed is {Car.Speed} km/h");
+                    for (int km = 1; 1 <= 5; km++)
+                    {
+                        Console.WriteLine($"{name} new speed is {Car.Speed} km/h");
+                        double secPerKm = 3600 / Car.Speed; //better with double for precision 
+
+                        await Task.Delay((int)(1000 * secPerKm)); //use int for rounding numbers, maybe not necessary - could just use int but why not double
+                    }
                 }
             }
             else
