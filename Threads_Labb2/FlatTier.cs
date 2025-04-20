@@ -2,11 +2,23 @@
 {
     class FlatTier
     {
-        //Flat tier - 2/50 (1/25) probabilirt - stops for 10 seconds (10000)
-        //static async FlatTier()
-        //{
+        //Flat tier - 2/50 (1/25) probabilirt - stops for 10 seconds(10000)
+        public static async Task TierFlat(string name)
+        {
+            Random rand = new Random();
+            var randomFlatTier = rand.Next(1, 26);
 
-        //}
+            if(randomFlatTier == 1)
+            {
+                Console.WriteLine($"{name} got a flat tier - fixes the tier");
+
+                await Task.Delay(10000);
+            }
+            else
+            {
+                Console.WriteLine("Flat tier went wrong");
+            }
+        }
 
     }
 }
