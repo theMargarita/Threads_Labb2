@@ -3,22 +3,17 @@
     public class Car
     {
         public string Name { get; set; }
-        public int Speed { get; set; }
+        public double Speed { get; set; } = 120.0d;
+        public double MinLength { get; set; }
+        public double MaxLength { get; set; } 
 
         //Because every car should have their own random generator ?
-        //public Random Random = new Random();
+        public Random Random = new Random();
+        public bool Status { get; set; }
 
-        public bool Status { get; set; } 
 
         //primary contructor (with lambda)
-        public Car(string name)
-        {
-            Name = name;
-            Speed = 120;
-            Status = false;
-        } 
-
-
+        public Car(string name) => Name = name;
     }
 
 }
