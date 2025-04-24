@@ -1,88 +1,70 @@
-﻿namespace Threads_Labb2
+﻿using Theads_Labb2_2._0;
+
+namespace Threads_Labb2
 {
     public class Race
     {
         public static List<Car> Cars = new();
         public static List<Thread> Threads = new();
-    
+
         //om man vill jobba med threads så kanske man bör göra tre olika metoder för att bilarna ska kunna köra concurrently 
         public static void StartRace()
         {
-            Car car1 = new Car("Blixten McQueen");
-            Car car2 = new Car("Bettan");
-            Car car3 = new Car("Den Röda Faran");
-            Car car4 = new Car("Bulan");
+            //add cars for the status checker
+            CheckStatus.Cars = Cars;
 
-            Random random = new Random();
-            ////foreach loop for cars
-            //foreach (var car in Cars)
-            //{
-            //    Console.WriteLine($"{car.Name} start driving");
-            //    for (int km = 1; km <= 5; km++)
-            //    {
-            //        if (random.Next(1, 101) < 30)
-            //        {
-            //            Console.WriteLine($"Oh no {car.Name} got some trubble");
-            //            RandomMethods(car);
-            //        }
-            //        Thread.Sleep(500);
-            //        Console.WriteLine($"{car.Name} has driven {km} km");
+            //start the status checker
+            CheckStatus.Status();
 
-            //    }
-            //    Console.WriteLine($"{car.Name} has won");
-            //}
+            Cars.Add(new Car("Blixten Mcqueen"));
+            Cars.Add(new Car("Röda Faran"));
+            Cars.Add(new Car("Bulan"));
+            Cars.Add(new Car("Bettan"));
+
+            
 
             foreach (var car in Cars)
             {
-                Thread t = new Thread(RandomMethods(car));
+                Thread t = new Thread(() => CreateRace(car));
                 Threads.Add(t);
                 t.Start();
+                Thread.Sleep(10000);
             }
 
-            Thread statusThread = new Thread(() =>
+            foreach (var t in Threads)
             {
-                while (true)
-                {
-                    string input = Console.ReadLine();
-
-                    if(input == "")
-                    {
-                        foreach(var car in Cars)
-                        {
-                            Console.WriteLine($"Status: {car.Name}");
-                        }
-                    }
-                }
-            });
-
-            foreach(var t in Threads)
-            {
-                t.Join(); //to wait for the reast
+                t.Join();//to wait for the rest of the threads to finish ?
             }
-
-            statusThread.Join(); //to finish the thread
-            Console.WriteLine("The race is now over");
         }
 
-     
-
-        public static void CreateThread()
+        public static void CreateRace(Car car)
         {
-            //List<Thread> threads = new();
-            //List<Car> Cars = new List<Car>();
+            double time = DateTime.Today.Second;
+            Console.WriteLine($"{car.Name} has start the race");
 
-            foreach (var car in Cars)
+            while (car.MinLength < car.MaxLength)
             {
-                Thread t = new Thread(() => StartRace());
-                Threads.Add(t);
+                var meterPerSeconds = car.Speed / 3.6; // to get m/s
+                car.MinLength += meterPerSeconds;
+                time += 1;
 
-                t.Start(car);
-                foreach (var tt in Threads)
+                if (time % 10 == 0) //every 10 seconds the random event wil activate 
                 {
-                    tt.Join();//to wait for the rest of the threads to finish 
+                    Console.WriteLine($"{car.Name} has traveled {car.MinLength}m");
+                    RandomMethods.Methods(car);
+                    CheckStatus.Status();
                 }
+                else
+                {
+                    Console.WriteLine("Something went wrong with the if statement in CreateRace");
+                }
+                Thread.Sleep(1000); //"time passing"
             }
 
+            car.Status = true;
+            Console.WriteLine($"{car.Name} has finished the race");
         }
+
+
     }
 }
