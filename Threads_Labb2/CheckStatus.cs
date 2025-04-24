@@ -3,10 +3,6 @@ namespace Threads_Labb2
 {
     public static class CheckStatus
     {
-        //public static event EventHandler? Enter;
-        //private static void Form1_KeyDown(object sender, System.KeyEventArgs e)
-        //{
-
-        //}
+        //bakground thread for status - readline, while and if statements should be enough
     }
 }
