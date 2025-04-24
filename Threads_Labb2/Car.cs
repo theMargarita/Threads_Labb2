@@ -9,7 +9,7 @@
 
         //Because every car should have their own random generator ?
         public Random Random = new Random();
-        public bool Status { get; set; }
+        public bool Status { get; set; } = false;
 
 
         //primary contructor (with lambda)
